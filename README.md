@@ -14,6 +14,7 @@ The system uses FastAPI for backend processing, Streamlit for the UI, a vector d
 • Scripts use selectors from actual HTML structure  
 
 ## Folder Structure
+```
 autonomous-qa-agent/
 ├─ app/
 │ ├─ main.py
@@ -25,22 +26,31 @@ autonomous-qa-agent/
 ├─ ui.py
 ├─ README.md
 └─ requirements.txt
+```
 
 ## Setup
 
 ### 1. Create a virtual environment
+```
 python -m venv venv
 source venv/bin/activate (Mac/Linux)
 venv\Scripts\activate (Windows)
+```
 
 ### 2. Install dependencies
+```
 pip install -r requirements.txt
+```
 
 ## Running the backend
+```
 python -m app.main
+```
 
 ## Running the Streamlit UI
+```
 streamlit run ui.py
+```
 
 ## Usage Flow
 1. Open the Streamlit UI.  
