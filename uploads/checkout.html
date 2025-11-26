@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E Shop Checkout</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .error { color: red; font-size: 14px; }
+        .btn { padding: 10px 16px; background-color: green; color: white; border: none; cursor: pointer; }
+        .item { margin-bottom: 10px; }
+        #successMessage { color: green; margin-top: 20px; font-size: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+<h2>Products</h2>
+
+<div class="item">
+    <span>Wireless Mouse</span>
+    <button id="addMouse" onclick="addToCart('mouse', 20)">Add to Cart</button>
+</div>
+
+<div class="item">
+    <span>USB Keyboard</span>
+    <button id="addKeyboard" onclick="addToCart('keyboard', 30)">Add to Cart</button>
+</div>
+
+<div class="item">
+    <span>Headphones</span>
+    <button id="addHeadphones" onclick="addToCart('headphones', 40)">Add to Cart</button>
+</div>
+
+<h2>Cart Summary</h2>
+
+<table>
+    <tr>
+        <td>Mouse</td>
+        <td><input id="qty_mouse" type="number" value="0" min="0"></td>
+    </tr>
+    <tr>
+        <td>Keyboard</td>
+        <td><input id="qty_keyboard" type="number" value="0" min="0"></td>
+    </tr>
+    <tr>
+        <td>Headphones</td>
+        <td><input id="qty_headphones" type="number" value="0" min="0"></td>
+    </tr>
+</table>
+
+<p>Total Price: $<span id="totalPrice">0</span></p>
+
+<label>Discount Code</label>
+<input id="discountCode" type="text">
+
+<h2>User Details</h2>
+
+<label>Name</label><br>
+<input id="name" type="text"><br>
+<span id="errName" class="error"></span><br>
+
+<label>Email</label><br>
+<input id="email" type="text"><br>
+<span id="errEmail" class="error"></span><br>
+
+<label>Address</label><br>
+<input id="address" type="text"><br>
+<span id="errAddress" class="error"></span><br>
+
+<h2>Shipping Method</h2>
+<input type="radio" id="ship_standard" name="shipping" value="standard" checked>
+<label>Standard</label><br>
+<input type="radio" id="ship_express" name="shipping" value="express">
+<label>Express</label><br>
+
+<h2>Payment Method</h2>
+<input type="radio" id="pay_card" name="payment" value="card" checked>
+<label>Credit Card</label><br>
+<input type="radio" id="pay_paypal" name="payment" value="paypal">
+<label>PayPal</label><br><br>
+
+<button id="payNow" class="btn" onclick="processPayment()">Pay Now</button>
+
+<p id="successMessage">Payment Successful!</p>
+
+<script>
+    const prices = { mouse: 20, keyboard: 30, headphones: 40 };
+
+    function addToCart(item, price) {
+        const qty = document.getElementById('qty_' + item);
+        qty.value = parseInt(qty.value) + 1;
+        updateTotal();
+    }
+
+    document.querySelectorAll('input[type=number]').forEach(e => {
+        e.addEventListener('change', updateTotal);
+    });
+
+    function updateTotal() {
+        let total = 0;
+        total += document.getElementById('qty_mouse').value * prices.mouse;
+        total += document.getElementById('qty_keyboard').value * prices.keyboard;
+        total += document.getElementById('qty_headphones').value * prices.headphones;
+
+        const code = document.getElementById('discountCode').value;
+        if (code === 'SAVE15') total = total * 0.85;
+
+        document.getElementById('totalPrice').innerText = total.toFixed(2);
+    }
+
+    function processPayment() {
+        let valid = true;
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+
+        document.getElementById('errName').innerText = name.trim() === '' ? 'Name is required' : '';
+        document.getElementById('errEmail').innerText = !email.includes('@') ? 'Invalid email' : '';
+        document.getElementById('errAddress').innerText = address.trim() === '' ? 'Address is required' : '';
+
+        if (!email.includes('@') || name.trim() === '' || address.trim() === '') valid = false;
+
+        if (valid) {
+            document.getElementById('successMessage').style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

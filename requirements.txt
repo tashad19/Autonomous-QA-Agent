@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+streamlit
+python-multipart
+sentence-transformers
+faiss-cpu
+beautifulsoup4
+pydantic
+pytest
+requests
+bs4
+lxml
+selenium
+pdfminer.six
+unstructured
+tqdm
+google-generativeai

@@ -1,0 +1,4 @@
+Form validation errors must appear in red text.
+The Pay Now button should appear in green.
+User messages must be visible and simple to understand.
+Inline error messages should show directly below each field.
