@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 import os
 
+API_BASE = "https://autonomous-qa-agent-rik3.onrender.com"
+
 st.title('Autonomous QA Agent')
 
 # Ensure uploads folder exists
@@ -25,7 +27,7 @@ if st.button('Build Knowledge Base'):
     else:
         checkout_payload = None
     with st.spinner('Uploading and building...'):
-        url = 'http://localhost:8000/ingest/upload'
+        url = API_BASE + '/ingest/upload'
         multipart = files
         if checkout_payload:
             multipart.append(checkout_payload)
@@ -35,7 +37,7 @@ if st.button('Build Knowledge Base'):
 query = st.text_input('Agent query', value='Generate all positive and negative test cases for the discount code feature.')
 
 if st.button('Generate Test Cases'):
-    resp = requests.post('http://localhost:8000/agent/generate_test_cases', json={'query': query})
+    resp = requests.post(API_BASE + '/agent/generate_test_cases', json={'query': query})
     try:
         data = resp.json()
         st.write(data)
@@ -54,7 +56,7 @@ if st.button('Generate Selenium Script'):
         tc = None
 
     resp = requests.post(
-        'http://localhost:8000/agent/generate_selenium',
+        API_BASE + '/agent/generate_selenium',
         json={'test_case': tc, 'checkout_html_path': checkout_path}
     )
 
